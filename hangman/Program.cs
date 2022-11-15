@@ -64,18 +64,12 @@ void menu()
     Console.Write("->");
 }
 
-
-
-void hra()
+void hra(string randomWord)
 {
     Random rnd = new Random();
 
     bool gg = true;
     int pokusy = 6;
-
-    string[] words = System.IO.File.ReadAllLines("C:\\Users\\Dendos\\source\\repos\\hangman\\hangman\\TextFile1.txt");
-    int start = rnd.Next(0, words.Length);
-    string randomWord = words[start];
 
 
     List<string> slovnik = new List<string> { "abc", "abcd", "abcde", "abcdef" };
@@ -94,7 +88,6 @@ void hra()
     int CharsRight = 0;
 
     int lengthOfWordToGuess = randomWord.Length;
-
 
     while (pokusy > 0 && CharsRight != lengthOfWordToGuess)
     {
@@ -172,6 +165,8 @@ void hra()
     }
 }
 
+
+
 int printWord(List<char> guessedLetters, String randomWord)
 {
     int counter = 0;
@@ -206,13 +201,14 @@ void printLines(String randomWord)
 
 Random rnd = new Random();
 
-bool gg = true;
-int pokusy = 6;
 
-string[] words = System.IO.File.ReadAllLines("C:\\Users\\Dendos\\source\\repos\\hangman\\hangman\\TextFile1.txt");
-int start = rnd.Next(0, words.Length);
-string randomWord = words[start];
+string[] wordsE = System.IO.File.ReadAllLines("C:\\Users\\Dendos\\source\\repos\\hangman\\hangman\\TextFile1.txt");
+int startS = rnd.Next(0, wordsE.Length);
+string randomWordE = wordsE[startS];
 
+string[] wordsH = System.IO.File.ReadAllLines("C:\\Users\\Dendos\\source\\repos\\hangman\\hangman\\TextFile2.txt");
+int startH = rnd.Next(0, wordsH.Length);
+string randomWordH = wordsH[startS];
 
 /*
 string path = "C:\\Users\\zizkade20\\source\\repos\\hangman\\hangman\\TextFile1.txt";
@@ -223,6 +219,8 @@ string randomWord = readText[index];
 
 
 
+bool gg = true;
+int pokusy = 6;
 
 
 List<string> slovnik = new List<string> { "abc", "abcd", "abcde", "abcdef" };
@@ -240,7 +238,6 @@ abc.AddRange(abdceda);
 
 int CharsRight = 0;
 
-int lengthOfWordToGuess = randomWord.Length;
 
 do
 {
@@ -258,16 +255,25 @@ do
             switch (diff)
             {
                 case "l":
+                    foreach (char x in randomWordE)
+                    {
+                        Console.Write("_ ");
+                    }
+                    hra(randomWordE);
                     break;
-                case "h":
+                case "t":
+                    foreach (char x in randomWordH)
+                    {
+                        Console.Write("_ ");
+                    }
+                    hra(randomWordH);
+                    break;
+                default:
+                    Console.WriteLine("Vyber z nabídky!");
                     break;
             }
-            foreach (char x in randomWord)
-            {
-                Console.Write("_ ");
-            }
-
             
+
             Console.WriteLine("\nKONEC HRY\n");
             CharsRight = 0;
             pouzitaPismena.Clear();
