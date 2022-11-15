@@ -7,7 +7,23 @@ file.readalltext
 
 void hangman(int wrong)
 {
-    if (wrong == 5)
+    if (wrong == 7)
+    {
+        Console.WriteLine("\n");
+        Console.WriteLine("    ");
+        Console.WriteLine("    ");
+        Console.WriteLine("    ");
+        Console.WriteLine("   ===");
+    }
+    else if (wrong == 6)
+    {
+        Console.WriteLine("\n");
+        Console.WriteLine("    |");
+        Console.WriteLine("    |");
+        Console.WriteLine("    |");
+        Console.WriteLine("   ===");
+    }
+    else if (wrong == 5)
     {
         Console.WriteLine("\n+---+");
         Console.WriteLine("    |");
@@ -64,12 +80,12 @@ void menu()
     Console.Write("->");
 }
 
-void hra(string randomWord)
+void hra(string randomWord, int pokusy)
 {
     Random rnd = new Random();
 
     bool gg = true;
-    int pokusy = 6;
+    
 
 
     List<string> slovnik = new List<string> { "abc", "abcd", "abcde", "abcdef" };
@@ -259,14 +275,14 @@ do
                     {
                         Console.Write("_ ");
                     }
-                    hra(randomWordE);
+                    hra(randomWordE, 8);
                     break;
                 case "t":
                     foreach (char x in randomWordH)
                     {
                         Console.Write("_ ");
                     }
-                    hra(randomWordH);
+                    hra(randomWordH, 6);
                     break;
                 default:
                     Console.WriteLine("Vyber z nabídky!");
