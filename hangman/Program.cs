@@ -1,4 +1,6 @@
 ﻿
+using System.Runtime.InteropServices;
+
 Console.WriteLine("VÍTEJ VE HŘE HANGMAN\n\nstiskni enter");
 Console.ReadLine();
 /*
@@ -76,7 +78,7 @@ void hangman(int wrong)
 
 void menu()
 {
-    Console.WriteLine("(H)Hrát\n(Z)ebricek\n(S)tatistika\n(N)Nápověda\n(E)Exit");
+    Console.WriteLine("(H)Hrát\n(Z)ebricek\n(S)tatistika\n(P)ravidla\n(E)xit");
     Console.Write("->");
 }
 
@@ -103,10 +105,13 @@ void hra(string randomWord, int pokusy)
 
     int CharsRight = 0;
 
-    int lengthOfWordToGuess = randomWord.Length;
+    int charSum = randomWord.Length;
 
-    while (pokusy > 0 && CharsRight != lengthOfWordToGuess)
+    int vyhraneHry = 0;
+
+    while (pokusy > 0 && CharsRight != charSum)
     {
+        
         Console.WriteLine("\nPočet životů: " + pokusy);
         Console.WriteLine();
         Console.Write("pouzita pismena: ");
@@ -162,22 +167,10 @@ void hra(string randomWord, int pokusy)
                     CharsRight = printWord(pouzitaPismena, randomWord);
                     Console.Write("\r\n");
                     printLines(randomWord);
-                    /*
-                    pokusy--;
-                    pouzitaPismena.Add(guess);
-                    Console.Write("pouzita pismena: ");
 
-                    foreach (char p in pouzitaPismena)
-                    {
-                        Console.Write(p + " ");
-                    }
-                    hangman(pokusy);
-
-                    Console.WriteLine();
-                    */
                 }
             }
-        }
+        }    
     }
 }
 
@@ -239,10 +232,6 @@ bool gg = true;
 int pokusy = 6;
 
 
-List<string> slovnik = new List<string> { "abc", "abcd", "abcde", "abcdef" };
-int index = rnd.Next(slovnik.Count);
-//string randomWord = slovnik[index];
-
 
 List<char> pouzitaPismena = new List<char>();
 
@@ -276,20 +265,31 @@ do
                         Console.Write("_ ");
                     }
                     hra(randomWordE, 8);
+                    
+                    
                     break;
                 case "t":
+                    /*
+                    if (randomWordH.Length != 0)
+                    {
+                        Console.WriteLine("problém se slovníkem!");
+                    }
+                    else
+                    {  }
+                    */
                     foreach (char x in randomWordH)
                     {
                         Console.Write("_ ");
                     }
                     hra(randomWordH, 6);
+                  
                     break;
                 default:
                     Console.WriteLine("Vyber z nabídky!");
                     break;
             }
             
-
+           // if 
             Console.WriteLine("\nKONEC HRY\n");
             CharsRight = 0;
             pouzitaPismena.Clear();
@@ -297,12 +297,17 @@ do
 
 
         case "z":
+            Console.WriteLine("\nBorci s nejvyšším skóre:\n\n\n");
             break;
         case "s":
+            Console.WriteLine("\nTvá statistika:\n\n\n");
             break;
-        case "n":
-            Console.WriteLine("Toto je nápověda");
-            Console.ReadLine();
+        case "p":
+            Console.WriteLine("" +
+                "\n1) Nepoužívej číslice a charaktery s háčky a čárkami, jinak se nebudou počítat" +
+                "\n2) Nezadávej více než jeden charakter, je to k ničemu" +
+                "\n3) I když budete vědět slovo, doplňte charaktery po jednom" +
+                "");
             break;
         case "e":
             Console.WriteLine("EXITING NOW...");
