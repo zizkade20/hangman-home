@@ -64,9 +64,112 @@ void menu()
     Console.Write("->");
 }
 
-void wrongGuess()
+
+
+void hra()
 {
-    
+    Random rnd = new Random();
+
+    bool gg = true;
+    int pokusy = 6;
+
+    string[] words = System.IO.File.ReadAllLines("C:\\Users\\Dendos\\source\\repos\\hangman\\hangman\\TextFile1.txt");
+    int start = rnd.Next(0, words.Length);
+    string randomWord = words[start];
+
+
+    List<string> slovnik = new List<string> { "abc", "abcd", "abcde", "abcdef" };
+    int index = rnd.Next(slovnik.Count);
+    //string randomWord = slovnik[index];
+
+
+    List<char> pouzitaPismena = new List<char>();
+
+    string abdceda = "abcdefghijklmnopqrstuvwxyz";
+
+    List<char> abc = new List<char>();
+
+    abc.AddRange(abdceda);
+
+    int CharsRight = 0;
+
+    int lengthOfWordToGuess = randomWord.Length;
+
+
+    while (pokusy > 0 && CharsRight != lengthOfWordToGuess)
+    {
+        Console.WriteLine("\nPočet životů: " + pokusy);
+        Console.WriteLine();
+        Console.Write("pouzita pismena: ");
+
+        foreach (char p in pouzitaPismena)
+        {
+            Console.Write(p + " ");
+        }
+
+
+        Console.WriteLine();
+        Console.WriteLine("\nHadej pismenko");
+        Console.Write("->");
+        char guess = Console.ReadLine()[0];
+
+        if (abc.Contains(guess))
+        {
+
+            if (pouzitaPismena.Contains(guess))
+            {
+                Console.WriteLine("toto pismeno jste jiz pouzil");
+
+                hangman(pokusy);
+                CharsRight = printWord(pouzitaPismena, randomWord);
+                printLines(randomWord);
+            }
+            else
+            {
+                bool right = false;
+
+                for (int i = 0; i < randomWord.Length; i++)
+                {
+                    if (guess == randomWord[i])
+                    {
+                        right = true;
+                    }
+                }
+
+                if (right)
+                {
+                    hangman(pokusy);
+                    pouzitaPismena.Add(guess);
+                    CharsRight = printWord(pouzitaPismena, randomWord);
+                    Console.Write("\r\n");
+                    printLines(randomWord);
+
+                }
+                else
+                {
+                    pokusy--;
+                    pouzitaPismena.Add(guess);
+                    hangman(pokusy);
+                    CharsRight = printWord(pouzitaPismena, randomWord);
+                    Console.Write("\r\n");
+                    printLines(randomWord);
+                    /*
+                    pokusy--;
+                    pouzitaPismena.Add(guess);
+                    Console.Write("pouzita pismena: ");
+
+                    foreach (char p in pouzitaPismena)
+                    {
+                        Console.Write(p + " ");
+                    }
+                    hangman(pokusy);
+
+                    Console.WriteLine();
+                    */
+                }
+            }
+        }
+    }
 }
 
 int printWord(List<char> guessedLetters, String randomWord)
@@ -106,6 +209,11 @@ Random rnd = new Random();
 bool gg = true;
 int pokusy = 6;
 
+string[] words = System.IO.File.ReadAllLines("C:\\Users\\Dendos\\source\\repos\\hangman\\hangman\\TextFile1.txt");
+int start = rnd.Next(0, words.Length);
+string randomWord = words[start];
+
+
 /*
 string path = "C:\\Users\\zizkade20\\source\\repos\\hangman\\hangman\\TextFile1.txt";
 string readText = File.ReadAllText(path);
@@ -114,11 +222,12 @@ string randomWord = readText[index];
 */
 
 
-string[] words = System.IO.File.ReadAllLines()
+
+
 
 List<string> slovnik = new List<string> { "abc", "abcd", "abcde", "abcdef" };
 int index = rnd.Next(slovnik.Count);
-string randomWord = slovnik[index];
+//string randomWord = slovnik[index];
 
 
 List<char> pouzitaPismena = new List<char>();
@@ -133,7 +242,6 @@ int CharsRight = 0;
 
 int lengthOfWordToGuess = randomWord.Length;
 
-
 do
 {
     menu();
@@ -142,86 +250,24 @@ do
     switch (input)
     {
         case "h":
+            Console.WriteLine("Vyber is obtížnost:\n(L)ehka\n(T)ezka");
+            Console.Write("->");
 
+            string diff = Console.ReadLine();
+
+            switch (diff)
+            {
+                case "l":
+                    break;
+                case "h":
+                    break;
+            }
             foreach (char x in randomWord)
             {
                 Console.Write("_ ");
             }
 
-            while (pokusy > 0 && CharsRight != lengthOfWordToGuess)
-            {
-                Console.WriteLine("\nPočet životů: " + pokusy);
-                Console.WriteLine();
-                Console.Write("pouzita pismena: ");
-                
-                foreach (char p in pouzitaPismena)
-                {
-                    Console.Write(p + " ");
-                }
-                
-
-                Console.WriteLine();
-                Console.WriteLine("\nHadej pismenko");
-                Console.Write("->");
-                char guess = Console.ReadLine()[0];
-                
-                if (abc.Contains(guess))
-                {
-                    
-                    if (pouzitaPismena.Contains(guess))
-                    {
-                        Console.WriteLine("toto pismeno jste jiz pouzil");
-                        
-                        hangman(pokusy);
-                        CharsRight = printWord(pouzitaPismena, randomWord);
-                        printLines(randomWord);
-                    } 
-                    else 
-                    {
-                        bool right = false;
-
-                        for (int i = 0; i < randomWord.Length; i++) 
-                        { 
-                            if (guess == randomWord[i]) 
-                            { 
-                                right = true; 
-                            } 
-                        }
-
-                        if (right)
-                        {
-                            hangman(pokusy);
-                            pouzitaPismena.Add(guess);
-                            CharsRight = printWord(pouzitaPismena, randomWord);
-                            Console.Write("\r\n");
-                            printLines(randomWord);
-                            
-                        }
-                        else
-                        {
-                            pokusy--;
-                            pouzitaPismena.Add(guess);
-                            hangman(pokusy);
-                            CharsRight = printWord(pouzitaPismena, randomWord);
-                            Console.Write("\r\n");
-                            printLines(randomWord);
-                            /*
-                            pokusy--;
-                            pouzitaPismena.Add(guess);
-                            Console.Write("pouzita pismena: ");
-
-                            foreach (char p in pouzitaPismena)
-                            {
-                                Console.Write(p + " ");
-                            }
-                            hangman(pokusy);
-                            
-                            Console.WriteLine();
-                            */
-                        }
-                    }
-                }
-            }
+            
             Console.WriteLine("\nKONEC HRY\n");
             CharsRight = 0;
             pouzitaPismena.Clear();
