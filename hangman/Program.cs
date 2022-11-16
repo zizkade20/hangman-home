@@ -91,11 +91,11 @@ void hra(string randomWord, int pokusy)
     bool gg = true;
 
 
-
+    /*
     List<string> slovnik = new List<string> { "abc", "abcd", "abcde", "abcdef" };
     int index = rnd.Next(slovnik.Count);
     //string randomWord = slovnik[index];
-
+    */
 
     List<char> pouzitaPismena = new List<char>();
 
